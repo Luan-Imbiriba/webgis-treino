@@ -1,0 +1,19 @@
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Arquivos de desenvolvimento
+.vscode/
+.idea/
+*.log
+
+# Arquivos shapefile (não necessários, já temos GeoJSON)
+shp/
+
+# Arquivos QMD (não necessários para o site)
+*.qmd
+
+
