@@ -2,7 +2,9 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <title>WebGIS - Múltiplos Basemaps</title>
     
     <!-- Leaflet CSS -->
@@ -391,13 +393,272 @@
             margin-bottom: 80px;
             margin-left: 0;
         }
+        
+        /* Botões de toggle para mobile */
+        .mobile-toggle {
+            display: none;
+            position: absolute;
+            z-index: 1001;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 10px 14px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #1a1a1a;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+        }
+        
+        .mobile-toggle:hover {
+            background: #f9fafb;
+        }
+        
+        .mobile-toggle-left {
+            top: 20px;
+            left: 20px;
+        }
+        
+        .mobile-toggle-right {
+            top: 20px;
+            right: 20px;
+        }
+        
+        .mobile-close {
+            display: none;
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #6b7280;
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            z-index: 1002;
+        }
+        
+        .mobile-close:hover {
+            background: #f3f4f6;
+            color: #1a1a1a;
+        }
+        
+        /* Media Queries para Mobile */
+        @media (max-width: 768px) {
+            .left-panel,
+            .right-panel {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                width: 85%;
+                max-width: 320px;
+                max-height: 100vh;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                z-index: 2000;
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+                border-top: none;
+                border-bottom: none;
+            }
+            
+            .left-panel.active,
+            .right-panel.active {
+                transform: translateX(0);
+            }
+            
+            .right-panel {
+                left: auto;
+                right: 0;
+                transform: translateX(100%);
+            }
+            
+            .right-panel.active {
+                transform: translateX(0);
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .mobile-close {
+                display: block;
+            }
+            
+            .left-panel h1 {
+                font-size: 18px;
+                padding-right: 40px;
+            }
+            
+            .left-panel .subtitle {
+                font-size: 12px;
+                padding-right: 40px;
+            }
+            
+            .right-panel h3 {
+                font-size: 13px;
+                padding-right: 40px;
+            }
+            
+            .legend-section h3,
+            .statistics-section h3 {
+                font-size: 13px;
+            }
+            
+            .legend-label,
+            .stat-item {
+                font-size: 12px;
+            }
+            
+            .basemap-button,
+            .tool-button {
+                font-size: 13px;
+                padding: 10px 14px;
+            }
+            
+            .layer-checkbox label {
+                font-size: 13px;
+            }
+            
+            .leaflet-bottom.leaflet-left {
+                bottom: 10px;
+                left: 10px;
+            }
+            
+            .leaflet-control-scale {
+                margin-bottom: 60px;
+                font-size: 11px;
+                padding: 3px 6px;
+            }
+            
+            /* Overlay para fechar painéis */
+            .panel-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.3);
+                z-index: 1999;
+                backdrop-filter: blur(2px);
+            }
+            
+            .panel-overlay.active {
+                display: block;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .left-panel,
+            .right-panel {
+                width: 90%;
+            }
+            
+            .mobile-toggle {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+            
+            .mobile-toggle-left {
+                top: 15px;
+                left: 15px;
+            }
+            
+            .mobile-toggle-right {
+                top: 15px;
+                right: 15px;
+            }
+            
+            .left-panel,
+            .right-panel {
+                padding: 20px;
+            }
+        }
+        
+        /* Melhorias de touch */
+        @media (hover: none) and (pointer: coarse) {
+            .tool-button,
+            .basemap-button,
+            .layer-checkbox {
+                min-height: 44px;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+            }
+            
+            .mobile-toggle {
+                min-height: 44px;
+                min-width: 44px;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+            }
+            
+            .mobile-close {
+                min-width: 44px;
+                min-height: 44px;
+                touch-action: manipulation;
+            }
+            
+            /* Melhorar scroll em mobile */
+            .left-panel,
+            .right-panel {
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+        
+        /* Melhorias para telas muito pequenas */
+        @media (max-width: 360px) {
+            .mobile-toggle {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+            
+            .left-panel,
+            .right-panel {
+                width: 95%;
+            }
+        }
+        
+        /* Orientação landscape em mobile */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .left-panel,
+            .right-panel {
+                max-height: 90vh;
+            }
+        }
+        
+        /* Tablet */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .left-panel {
+                width: 280px;
+                padding: 20px;
+            }
+            
+            .right-panel {
+                width: 240px;
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 <body>
     <div id="map"></div>
     
+    <!-- Overlay para mobile -->
+    <div class="panel-overlay" id="panel-overlay"></div>
+    
+    <!-- Botões de toggle para mobile -->
+    <button class="mobile-toggle mobile-toggle-left" id="toggle-left-panel">☰ Info</button>
+    <button class="mobile-toggle mobile-toggle-right" id="toggle-right-panel">⚙️ Controles</button>
+    
     <!-- Painel Esquerdo - Informações e Legenda -->
-    <div class="left-panel">
+    <div class="left-panel" id="left-panel">
+        <button class="mobile-close" id="close-left-panel">×</button>
         <h1>WebGIS</h1>
         <div class="subtitle">Sistema de Informação Geográfica</div>
         
@@ -442,7 +703,8 @@
     </div>
     
     <!-- Painel Direito - Controles -->
-    <div class="right-panel">
+    <div class="right-panel" id="right-panel">
+        <button class="mobile-close" id="close-right-panel">×</button>
         <div class="panel-section">
             <h3>Mapas Base</h3>
             <div class="basemap-control">
@@ -930,6 +1192,99 @@
         loadSantaremLayer();
         loadImoveisLayer();
         loadHidrografiaLayer();
+        
+        // Controles de painéis mobile
+        const leftPanel = document.getElementById('left-panel');
+        const rightPanel = document.getElementById('right-panel');
+        const overlay = document.getElementById('panel-overlay');
+        const toggleLeftBtn = document.getElementById('toggle-left-panel');
+        const toggleRightBtn = document.getElementById('toggle-right-panel');
+        const closeLeftBtn = document.getElementById('close-left-panel');
+        const closeRightBtn = document.getElementById('close-right-panel');
+        
+        // Função para abrir painel esquerdo
+        function openLeftPanel() {
+            leftPanel.classList.add('active');
+            overlay.classList.add('active');
+            // Fechar painel direito se estiver aberto
+            if (rightPanel.classList.contains('active')) {
+                rightPanel.classList.remove('active');
+            }
+        }
+        
+        // Função para fechar painel esquerdo
+        function closeLeftPanel() {
+            leftPanel.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+        
+        // Função para abrir painel direito
+        function openRightPanel() {
+            rightPanel.classList.add('active');
+            overlay.classList.add('active');
+            // Fechar painel esquerdo se estiver aberto
+            if (leftPanel.classList.contains('active')) {
+                leftPanel.classList.remove('active');
+            }
+        }
+        
+        // Função para fechar painel direito
+        function closeRightPanel() {
+            rightPanel.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+        
+        // Event listeners para mobile
+        if (toggleLeftBtn) {
+            toggleLeftBtn.addEventListener('click', openLeftPanel);
+        }
+        if (toggleRightBtn) {
+            toggleRightBtn.addEventListener('click', openRightPanel);
+        }
+        if (closeLeftBtn) {
+            closeLeftBtn.addEventListener('click', closeLeftPanel);
+        }
+        if (closeRightBtn) {
+            closeRightBtn.addEventListener('click', closeRightPanel);
+        }
+        
+        // Fechar painéis ao clicar no overlay
+        if (overlay) {
+            overlay.addEventListener('click', function() {
+                closeLeftPanel();
+                closeRightPanel();
+            });
+        }
+        
+        // Fechar painéis ao pressionar ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLeftPanel();
+                closeRightPanel();
+            }
+        });
+        
+        // Detectar mudança de tamanho da tela
+        let isMobile = window.innerWidth <= 768;
+        window.addEventListener('resize', function() {
+            const wasMobile = isMobile;
+            isMobile = window.innerWidth <= 768;
+            
+            // Se mudou de mobile para desktop, remover classes active
+            if (wasMobile && !isMobile) {
+                leftPanel.classList.remove('active');
+                rightPanel.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+        });
+        
+        // Melhorar experiência touch no mapa
+        if ('ontouchstart' in window) {
+            // Aumentar área de toque para controles
+            document.querySelectorAll('.tool-button, .basemap-button').forEach(btn => {
+                btn.style.minHeight = '44px';
+            });
+        }
     </script>
 </body>
 </html>
